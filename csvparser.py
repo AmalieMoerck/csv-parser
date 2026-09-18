@@ -28,7 +28,7 @@ def line_parser(line):
 
 #Takes filename as input, opens file, reads it into a text string and splits lines by commas
 def csv_parser(file):
-    with open(file, "r", encoding="cp1250") as csv_file:
+    with open(file, "r", encoding="utf-8") as csv_file:
         text = csv_file.read()
     lines = text.splitlines()
 
