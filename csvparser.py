@@ -34,13 +34,13 @@ def csv_parser(file):
     lines = text.splitlines()
 
     if not lines:
-         return[]
+        return[]
 
 #saves the first line as header
     header = line_parser(lines[0])
 
 #empty list to save result
-    data = []
+    result = []
 
 #goes through all remaining lines, calls parse_line function 
     for line in lines[1:]:
@@ -52,15 +52,15 @@ def csv_parser(file):
         for i in range(len(header)):
             row[header[i]] = values[i]
 
-        data.append(row)
+        result.append(row)
 
-    return data
+    return result
 
 #run parser and read csv file
-data = csv_parser("employees.ascii.csv")
-#data = csv_parser("testcsv.csv")
-#data = csv_parser("sogne.dawa.csv")
+result = csv_parser("employees.ascii.csv")
+#result = csv_parser("testcsv.csv")
+#result = csv_parser("sogne.dawa.csv")
 
-print(data)
+print(result)
 
 
