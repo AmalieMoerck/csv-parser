@@ -24,15 +24,15 @@ class TestStringMethods(unittest.TestCase):
             ["Tobias", "45", "Århus, Danmark"]
         )
 
-    #def test_line_parser_nested_qoutes(self):
-    #    line = 'Tobias,45,"Århus,""Danmark"""'
+    def test_line_parser_nested_qoutes(self):
+        line = 'Tobias,45,"Århus,""Danmark"""'
   
-    #    result = line_parser(line)
+        result = line_parser(line)
 
-    #    self.assertEqual(
-    #        result,
-    #        ['Tobias', '45', "Århus,"Danmark""]
-    #    )
+        self.assertEqual(
+            result,
+            ['Tobias', '45', '"Århus,"Danmark""']
+        )
 
     def test_csv_parser(self):
         with open("test.csv", "w", encoding="utf-8") as file:
