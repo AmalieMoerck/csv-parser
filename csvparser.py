@@ -57,7 +57,7 @@ def csv_parser(file):
     return data
 
 #run parser and read csv file
-#data = csv_parser("employees.ascii.csv")
+data = csv_parser("employees.ascii.csv")
 #data = csv_parser("testcsv.csv")
 #data = csv_parser("sogne.dawa.csv")
 
@@ -65,6 +65,6 @@ def csv_parser(file):
 
 #data = csv_parser(filename)
 
-#print(data)
+print(data)
 
 
