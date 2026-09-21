@@ -2,16 +2,6 @@
 
 #function that takes a line from a csv file as input and saves in a list
 
-
-#goes through all characters, and checks for "" and , 
-    #for char in line:
-    #    if char == '"':
-    #        esc_qoutes = not esc_qoutes
-    #    elif char == ',' and not esc_qoutes:
-    #        values.append(current_field)
-    #        current_field = ""
-    #    else:
-    #        current_field += char
 def line_parser(line):
     values = []
     current_field = ""
@@ -36,10 +26,6 @@ def line_parser(line):
     i+= 1
     values.append(current_field)
     return values
-
-#def csv_parser(filename)
-#   with open(filename, "r", encoding="utf-8") as csv_file:
-#       text = file.read()
 
 #Takes filename as input, opens file, reads it into a text string and splits lines by commas
 def csv_parser(file):
@@ -74,10 +60,6 @@ def csv_parser(file):
 data = csv_parser("employees.ascii.csv")
 #data = csv_parser("testcsv.csv")
 #data = csv_parser("sogne.dawa.csv")
-
-#filename = input("indtast csv fil:")
-
-#data = csv_parser(filename)
 
 print(data)
 
