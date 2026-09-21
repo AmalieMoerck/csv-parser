@@ -57,7 +57,7 @@ def csv_parser(file):
     return result
 
 #run parser and read csv file
-result = csv_parser("employees.ascii.csv")
+#result = csv_parser("employees.ascii.csv")
 #result = csv_parser("testcsv.csv")
 #result = csv_parser("sogne.dawa.csv")
 result = csv_parser("testcsv.csv")
