@@ -60,6 +60,7 @@ def csv_parser(file):
 result = csv_parser("employees.ascii.csv")
 #result = csv_parser("testcsv.csv")
 #result = csv_parser("sogne.dawa.csv")
+result = csv_parser("testcsv.csv")
 
 print(result)
 
