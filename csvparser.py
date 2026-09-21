@@ -1,26 +1,41 @@
 #Missing quotes in qoutes, and empty space exceptions
 
 #function that takes a line from a csv file as input and saves in a list
+
+
+#goes through all characters, and checks for "" and , 
+    #for char in line:
+    #    if char == '"':
+    #        esc_qoutes = not esc_qoutes
+    #    elif char == ',' and not esc_qoutes:
+    #        values.append(current_field)
+    #        current_field = ""
+    #    else:
+    #        current_field += char
 def line_parser(line):
     values = []
     current_field = ""
-    esc_qoutes = False
+    esc_quotes = False
 
-#goes through all characters, and checks for "" and , 
-    for char in line:
+    i = 0
+    
+    while i<len(line):
+        char = line[i]
         if char == '"':
-            esc_qoutes = not esc_qoutes
-        elif char == ',' and not esc_qoutes:
-            values.append(current_field)
-            current_field = ""
+            if esc_quotes and i+1 < len(line) and line[i+1] == '"':
+                current_field = '"'
+                i +=1 
+            else: 
+                esc_quotes = not esc_quotes  
+                
+        elif char == ',' and not esc_quotes:
+                values.append(current_field)
+                current_field = ""
         else:
             current_field += char
-
+    i+= 1
     values.append(current_field)
     return values
-
-#test = 'Thomas, 23, "vejle, Danmark"'
-#print(parse_line(test))
 
 #def csv_parser(filename)
 #   with open(filename, "r", encoding="utf-8") as csv_file:
@@ -32,11 +47,10 @@ def csv_parser(file):
         text = csv_file.read()
     lines = text.splitlines()
 
-#checks for empty file
     if not lines:
          return[]
 
-#saves the first line in header
+#saves the first line as header
     header = line_parser(lines[0])
 
 #empty list to save result
