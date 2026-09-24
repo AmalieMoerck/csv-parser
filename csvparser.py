@@ -4,64 +4,107 @@
 
 def line_parser(line):
     values = []
-    current_field = ""
-    esc_quotes = False
+    current_field = ""   
+    nested_quotes = False
 
     i = 0
     
-    while i<len(line):
+    while i < len(line):
         char = line[i]
         if char == '"':
-            if esc_quotes and i+1 < len(line) and line[i+1] == '"':
-                current_field = '"'
-                i +=1 
+            if not nested_quotes and current_field == "":
+                nested_quotes = True
+            elif nested_quotes and i+1 < len(line) and line[i+1] == '"':
+                current_field += '"'
+                i+=1
+            elif not nested_quotes: 
+                if current_field != "":
+                    raise ValueError("Double quotes can not be in an unquoted field")
+                #nested_quotes = True
             else: 
-                esc_quotes = not esc_quotes  
-                
-        elif char == ',' and not esc_quotes:
+                nested_quotes = False
+        elif char == ',' and not nested_quotes:
                 values.append(current_field)
                 current_field = ""
+                
         else:
             current_field += char
-    i+= 1
+        i+=1
+
+    if nested_quotes:
+        raise ValueError("Nested qoute not closed")
+    
     values.append(current_field)
+
     return values
 
 #Takes filename as input, opens file, reads it into a text string and splits lines by commas
 def csv_parser(file):
     with open(file, "r", encoding="utf-8") as csv_file:
         text = csv_file.read()
+
     lines = text.splitlines()
 
+
+
     if not lines:
-        return[]
+        return[], [] #Husk unittest
+        
 
 #saves the first line as header
     header = line_parser(lines[0])
 
 #empty list to save result
     result = []
+    errors = []
 
 #goes through all remaining lines, calls parse_line function 
-    for line in lines[1:]:
-        values = line_parser(line)
+    for line_number, line in enumerate(lines[1:], start=2):
+
+        try:
+            values = line_parser(line)
+            if len(values) != len(header):
+                errors.append(
+                    (
+                        line_number,
+                        line,
+                        "wrong number of fields"
+                    )
+                )
+                continue
 
 #saves into dictionary that take header and corresponding value
-        row = {}
+            row = {}
 
-        for i in range(len(header)):
-            row[header[i]] = values[i]
+            for i in range(len(header)):
+                if values[i] == "":
+                    row[header[i]] = "NULL"
+                else:   
+                    row[header[i]] = values[i]
 
-        result.append(row)
+            result.append(row)
 
-    return result
+        except ValueError as error:
+            errors.append(
+                (
+                    line_number,
+                    line,
+                    str(error),
+                )
+            )
+            continue
+
+    return result, errors
 
 #run parser and read csv file
 #result = csv_parser("employees.ascii.csv")
 #result = csv_parser("testcsv.csv")
 #result = csv_parser("sogne.dawa.csv")
-result = csv_parser("testcsv.csv")
+#result = csv_parser("testcsv.csv")
+#result = csv_parser("testnumberfields.csv")
+#result = csv_parser("QuotesinQuotes.csv")
+#result = csv_parser("testparserquotes.csv")
 
-print(result)
+#print(result)
 
 
