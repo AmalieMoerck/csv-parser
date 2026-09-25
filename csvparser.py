@@ -41,7 +41,7 @@ def line_parser(line):
 
 #Takes filename as input, opens file, reads it into a text string and splits lines by commas
 def csv_parser(file):
-    with open(file, "r", encoding="utf-8") as csv_file:
+    with open(file, "r", encoding="utf-8-sig") as csv_file:
         text = csv_file.read()
 
 
@@ -54,7 +54,7 @@ def csv_parser(file):
 #saves the first line as header
     header = line_parser(lines[0])
 
-#empty list to save result
+#empty lists to save result
     result = []
     errors = []
 
@@ -65,7 +65,6 @@ def csv_parser(file):
             values = line_parser(line)
 
             if len(values) != len(header):
-                print("Wrong number of fields")
                 errors.append(
                     (
                         line_number,
@@ -94,7 +93,7 @@ def csv_parser(file):
                     str(error),
                 )
             )
-            
+            #continue   
 
     return result, errors
 

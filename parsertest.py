@@ -83,8 +83,8 @@ class TestParser(unittest.TestCase):
         self.assertEqual(errors, [])
 
     def test_file_empty(self):
-        with open("testempty.csv", "w", encoding="utf-8") as file:
-            pass
+        with open("testempty.csv", "r", encoding="utf-8") as file:
+            text = file.read
         result = csv_parser("testempty.csv") 
         expected = ([],[])
                    
