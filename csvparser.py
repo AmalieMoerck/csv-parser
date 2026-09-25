@@ -20,9 +20,10 @@ def line_parser(line):
             elif not nested_quotes: 
                 if current_field != "":
                     raise ValueError("Double quotes can not be in an unquoted field")
-                #nested_quotes = True
+                
             else: 
                 nested_quotes = False
+
         elif char == ',' and not nested_quotes:
                 values.append(current_field)
                 current_field = ""
@@ -32,7 +33,7 @@ def line_parser(line):
         i+=1
 
     if nested_quotes:
-        raise ValueError("Nested qoute not closed")
+        raise ValueError("Nested qoutes not closed")
     
     values.append(current_field)
 
@@ -43,12 +44,11 @@ def csv_parser(file):
     with open(file, "r", encoding="utf-8") as csv_file:
         text = csv_file.read()
 
+
     lines = text.splitlines()
 
-
-
     if not lines:
-        return[], [] #Husk unittest
+        return[], [] 
         
 
 #saves the first line as header
@@ -63,7 +63,9 @@ def csv_parser(file):
 
         try:
             values = line_parser(line)
+
             if len(values) != len(header):
+                print("Wrong number of fields")
                 errors.append(
                     (
                         line_number,
@@ -92,19 +94,14 @@ def csv_parser(file):
                     str(error),
                 )
             )
-            continue
+            
 
     return result, errors
 
 #run parser and read csv file
-#result = csv_parser("employees.ascii.csv")
-#result = csv_parser("testcsv.csv")
-#result = csv_parser("sogne.dawa.csv")
-#result = csv_parser("testcsv.csv")
-#result = csv_parser("testnumberfields.csv")
-#result = csv_parser("QuotesinQuotes.csv")
-#result = csv_parser("testparserquotes.csv")
 
-#print(result)
+file = input("Indtast csv fil: ")
+data = csv_parser(file)
+print(data)
 
 
